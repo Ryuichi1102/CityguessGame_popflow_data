@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>例題_stay_pop.html</title>
+    <style>
+        body { font-family: sans-serif; margin: 5px 20px; }
+        h1 { font-size: 24px; }
+        .controls { margin-bottom: 5px; display: flex; gap: 30px; }
+        .control-group p { font-weight: bold; margin: 0 0 5px 0; }
+        .control-group label { margin-right: 15px; }
+        iframe { width: 100%; height: 80vh; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+
+    <h1>ある都市の1日あたり平均滞在人口_1kmメッシュ(2021年)</h1>
+
+    <div class="controls">
+        <div class="control-group" id="day-type-group">
+            <p>デイタイプ</p>
+            <label><input type="radio" name="day_type" value="平日" checked> 平日</label>
+            <label><input type="radio" name="day_type" value="休日"> 休日</label>
+            <label><input type="radio" name="day_type" value="全日"> 全日</label>
+        </div>
+        <div class="control-group" id="time-slot-group">
+            <p>時間帯</p>
+            <label><input type="radio" name="time_slot" value="昼" checked> 昼</label>
+            <label><input type="radio" name="time_slot" value="深夜"> 深夜</label>
+            <label><input type="radio" name="time_slot" value="終日"> 終日</label>
+        </div>
+    </div>
+
+    <iframe id="chart-frame" src="例題_charts1/chart1_平日-昼_2021.html"></iframe>
+
+    <script>
+        // スクリプトはステップ3で追加
+        // <script>タグの中にこのコードを貼り付けます
+
+        const dayTypeGroup = document.querySelector('#day-type-group');
+        const timeSlotGroup = document.querySelector('#time-slot-group');
+        const chartFrame = document.querySelector('#chart-frame');
+
+        function updateChart() {
+            // 選択されている値を取得
+            const selectedDayType = document.querySelector('input[name="day_type"]:checked').value;
+            const selectedTimeSlot = document.querySelector('input[name="time_slot"]:checked').value;
+            
+            // ファイル名を組み立てる
+            const modeName = `${selectedDayType}-${selectedTimeSlot}`;
+            const newChartSrc = `例題_charts1/chart1_${modeName}_2021.html`;
+            
+            // iframeのソースを更新
+            console.log(`Loading: ${newChartSrc}`);
+            chartFrame.src = newChartSrc;
+        }
+
+        // どちらかの選択肢が変更されたら、updateChart関数を呼び出す
+        dayTypeGroup.addEventListener('change', updateChart);
+        timeSlotGroup.addEventListener('change', updateChart);
+    </script>
+
+</body>
+</html>
